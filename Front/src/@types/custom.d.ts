@@ -1,7 +1,19 @@
-declare module "*.svg" {
-  import React = require("react");
+export type UserStatus = "default" | "disabled" | "prevent";
 
-  export const ReactComponent: REact.FC<React.SVGProps<SVGSVGElement>>;
-  const src: string;
-  export default src;
-}
+export type RegisterValues = {
+  userId: string;
+  userPwd: string;
+  confirmId: boolean;
+  confirmPwd: string;
+  profileImg: string | null;
+  userInfo: string | null;
+  githubUrl: string | null;
+  githubUrlExpose: boolean;
+  mento: boolean;
+  enrollDate: Date;
+};
+
+export type HTMLInput = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;

@@ -1,6 +1,7 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import { mergeConfig } from "vite";
 
-const config: StorybookConfig = {
+const storyConfig: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
     "@storybook/addon-links",
@@ -9,11 +10,15 @@ const config: StorybookConfig = {
     "@storybook/addon-styling",
   ],
   framework: "@storybook/react-vite",
-  async viteFinal(config) {
-    return config;
+  async viteFinal(baseConfig, { configType }) {
+    return mergeConfig(baseConfig, {
+      // manually specify plugins to avoid conflict
+      plugins: [],
+    });
   },
+
   docs: {
     autodocs: "tag",
   },
 };
-export default config;
+export default storyConfig;

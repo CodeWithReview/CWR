@@ -1,0 +1,131 @@
+DROP TABLE IF EXISTS `review`;
+DROP TABLE IF EXISTS `request`;
+DROP TABLE IF EXISTS `memberDevelopSkill`;
+DROP TABLE IF EXISTS `developSkill`;
+DROP TABLE IF EXISTS `memberApi`;
+DROP TABLE IF EXISTS `member`;
+
+CREATE TABLE `member` (
+	`userNo`	int	NOT NULL	COMMENT '유저번호',
+	`userId`	varchar(10)	NOT NULL  unique	COMMENT '유저아이디',
+	`userPwd`	varchar(500)	NOT NULL	COMMENT '비밀번호',
+	`profileImg`	varchar(500)	NULL	COMMENT '프로필이미지',
+	`userInfo`	varchar(100)	NULL	COMMENT '자기소개',
+	`status`	varchar(10)	 NOT NULL	DEFAULT 'default'	COMMENT '계정상태(default / disabled / prevent)',
+	`mento`	char(1)	NOT NULL	DEFAULT 'N'	COMMENT '멘토여부(Y/N)',
+	`mentoDate`	datetime	NOT NULL	COMMENT '멘토여부수정날짜',
+	`githubUrl`	varchar(500)	NULL	COMMENT '깃허브주소',
+	`githubUrlExpose`	char(1)	NOT NULL	DEFAULT 'N'	COMMENT '깃허브주소노출여부(Y/N)',
+	`disabledDate`	datetime	NULL	COMMENT '탈퇴/차단일',
+	`enrollDate`	datetime	NOT NULL	COMMENT '가입일'
+);
+
+CREATE TABLE `request` (
+	`requestNo`	int	NOT NULL	COMMENT '의뢰번호',
+	`menteeNo`	int	NOT NULL	COMMENT '멘티no',
+	`mentoNo`	int	NULL	COMMENT '멘토no(null가능)',
+	`status`	varchar(10)	NOT NULL	COMMENT '상태(waiting / progress / complete / cancle)',
+	`title`	varchar(50)	NOT NULL	COMMENT '제목',
+	`content`	varchar(500)	NOT NULL	COMMENT '내용',
+	`saveRoot`	varchar(100)	NULL	COMMENT '파일저장경로'
+);
+
+CREATE TABLE `review` (
+	`reviewNo`	int	NOT NULL	COMMENT '리뷰번호',
+	`requestNo`	int	NOT NULL	COMMENT '의뢰번호',
+	`topReviewNo`	int	NULL	COMMENT '상위리뷰번호',
+	`userNo`	int	NULL	COMMENT '작성자',
+	`content`	text(65535)	NOT NULL	COMMENT '내용',
+	`date`	datetime	NOT NULL	COMMENT '작성일'
+);
+
+CREATE TABLE `memberApi` (
+	`userNo`	int	NOT NULL	COMMENT '유저번호',
+	`apiType`	varchar(10)	NOT NULL	COMMENT 'api종류(google / github)',
+	`apiKey`	varchar(300)	NOT NULL	COMMENT 'api키값',
+	`apiId`	varchar(100)	NULL	COMMENT 'api 아이디값'
+);
+
+CREATE TABLE `developSkill` (
+	`skill`	varchar(100)	NOT NULL	COMMENT '개발언어'
+);
+
+CREATE TABLE `memberDevelopSkill` (
+	`userNo`	int	NOT NULL	COMMENT '유저번호',
+	`skill`	varchar(100)	NOT NULL	COMMENT '개발언어'
+);
+
+ALTER TABLE `member` ADD CONSTRAINT `PK_MEMBER` PRIMARY KEY (
+	`userNo`
+);
+
+ALTER TABLE `request` ADD CONSTRAINT `PK_REQUEST` PRIMARY KEY (
+	`requestNo`
+);
+
+ALTER TABLE `review` ADD CONSTRAINT `PK_REVIEW` PRIMARY KEY (
+	`reviewNo`
+);
+
+ALTER TABLE `memberApi` ADD CONSTRAINT `PK_MEMBERAPI` PRIMARY KEY (
+	`userNo`
+);
+
+ALTER TABLE `developSkill` ADD CONSTRAINT `PK_DEVELOPSKILL` PRIMARY KEY (
+	`skill`
+);
+
+ALTER TABLE `memberDevelopSkill` ADD CONSTRAINT `PK_MEMBERDEVELOPSKILL` PRIMARY KEY (
+	`userNo`,
+	`skill`
+);
+
+ALTER TABLE `request` ADD CONSTRAINT `FK_member_TO_request_1` FOREIGN KEY (
+	`menteeNo`
+)
+REFERENCES `member` (
+	`userNo`
+) ON DELETE CASCADE;
+
+ALTER TABLE `request` ADD CONSTRAINT `FK_member_TO_request_2` FOREIGN KEY (
+	`mentoNo`
+)
+REFERENCES `member` (
+	`userNo`
+) ON DELETE SET NULL;
+
+ALTER TABLE `review` ADD CONSTRAINT `FK_request_TO_review_1` FOREIGN KEY (
+	`requestNo`
+)
+REFERENCES `request` (
+	`requestNo`
+) ON DELETE CASCADE;
+
+ALTER TABLE `review` ADD CONSTRAINT `FK_member_TO_review_1` FOREIGN KEY (
+	`userNo`
+)
+REFERENCES `member` (
+	`userNo`
+) ON DELETE SET NULL;
+
+ALTER TABLE `memberApi` ADD CONSTRAINT `FK_member_TO_memberApi_1` FOREIGN KEY (
+	`userNo`
+)
+REFERENCES `member` (
+	`userNo`
+) ON DELETE CASCADE;
+
+ALTER TABLE `memberDevelopSkill` ADD CONSTRAINT `FK_member_TO_memberDevelopSkill_1` FOREIGN KEY (
+	`userNo`
+)
+REFERENCES `member` (
+	`userNo`
+) ON DELETE CASCADE;
+
+ALTER TABLE `memberDevelopSkill` ADD CONSTRAINT `FK_developSkill_TO_memberDevelopSkill_1` FOREIGN KEY (
+	`skill`
+)
+REFERENCES `developSkill` (
+	`skill`
+) ON DELETE CASCADE;
+

@@ -41,7 +41,7 @@ document.getElementById("test-btn").addEventListener("click", ()=>{
 		formData.append('file', file);
 	  }
 	
-	$.ajax({
+<%-- 	$.ajax({
 	    url: '<%= path%>/upload',
 	    dataType: 'multipart/form-data', //form data 설정
 	    method: 'POST',
@@ -55,7 +55,23 @@ document.getElementById("test-btn").addEventListener("click", ()=>{
 	      console.log('에러발생');
 	      console.log(request.status);
 	    },
-	  });
+	  }); --%>
+	  
+	  $.ajax({
+		    url: '<%= path%>/upload',
+		    dataType: 'multipart/form-data', //form data 설정
+		    method: 'POST',
+		    processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
+		    contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
+		    data: formData,
+		    success: function (result) {
+		    	console.log("성공");
+		    },
+		    error: function (request) {
+		      console.log('에러발생');
+		      console.log(request.status);
+		    },
+		  });
 
 });
 

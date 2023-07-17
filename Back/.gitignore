@@ -1,7 +1,8 @@
-/.metadata/
-/CWR/.metadata/
-/CWR/.settings/
-/CWR/Servers/
-/CWR/target/
 /apache-maven-3.9.1/
 /apache-tomcat-9.0.73/
+/.metadata/
+/CWR/.metadata/
+/CWR/Servers/
+/CWR/CWR/.settings/
+/CWR/CWR/target/
+/CWR/CWR/src/main/webapp/resources/uploadFile/

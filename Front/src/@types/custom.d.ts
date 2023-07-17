@@ -5,9 +5,10 @@ export type RegisterValues = {
   userPwd: string;
   confirmId: boolean;
   confirmPwd: string;
-  profileImg: string | null;
-  userInfo: string | null;
-  githubUrl: string | null;
+  skill?: string[] | null;
+  profileImg?: string | null;
+  userInfo?: string | null;
+  githubUrl?: string | null;
   githubUrlExpose: boolean;
   mento: boolean;
   enrollDate: Date;

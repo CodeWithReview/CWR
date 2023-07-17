@@ -14,7 +14,6 @@ const FormInput = ({ id, displayName, type }: FormInputProps) => {
     formState: { errors },
     register,
   } = useFormContext();
-
   return (
     <div>
       <Input {...register(id)} id={id} displayName={displayName} type={type} />

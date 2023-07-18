@@ -2,13 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Header from "@/components/Header";
 import SignUp from "@/pages/SignUp";
 import Content from "@/components/Content";
+import { ReduxProvider } from "@/context";
 
 const StorySignUpPage = () => (
   <>
-    <Header />
-    <Content>
-      <SignUp />
-    </Content>
+    <ReduxProvider>
+      <Header />
+      <Content>
+        <SignUp />
+      </Content>
+    </ReduxProvider>
   </>
 );
 

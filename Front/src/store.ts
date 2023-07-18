@@ -1,13 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import usersReducer from "@/features/users/userSlice";
+import { usersReducer } from "@/features/users";
 
 const makeStore = () => {
   const store = configureStore({
     reducer: {
       usersReducer
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false }).concat(logger),
     devTools: process.env.NODE_ENV === "development"
   });
 

@@ -7,18 +7,22 @@ const storyConfig: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "@storybook/addon-styling",
+    "@storybook/addon-styling"
   ],
-  framework: "@storybook/react-vite",
+  framework: {
+    name: "@storybook/react-vite",
+    options: {}
+  },
+
   async viteFinal(baseConfig, { configType }) {
     return mergeConfig(baseConfig, {
       // manually specify plugins to avoid conflict
-      plugins: [],
+      plugins: []
     });
   },
 
   docs: {
-    autodocs: "tag",
-  },
+    autodocs: "tag"
+  }
 };
 export default storyConfig;

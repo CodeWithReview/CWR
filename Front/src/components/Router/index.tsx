@@ -28,14 +28,6 @@ export const router = createBrowserRouter(
           </Suspense>
         }
       />
-      {/* <Route
-        path="/signin"
-        element={
-          <Suspense>
-            <Home />
-          </Suspense>
-        }
-      /> */}
     </Route>
   )
 );

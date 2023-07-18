@@ -13,6 +13,8 @@ const Register = () => {
   const password = form.watch("userPwd");
   const cpassword = form.watch("confirmPwd");
 
+  // 해당 의존성은 초기에 전송버튼을 누르지 않아도 validation이 작동하는데
+  // 필요한 것
   useEffect(() => {
     form.trigger(["userId", "userPwd", "confirmPwd"]);
   }, [password, id, cpassword, form.trigger]);
@@ -30,11 +32,6 @@ const Register = () => {
         displayName="Confirm Password"
       />
       <FormInput id="mento" type="checkbox" displayName="멘토 여부" />
-      <FormInput
-        id="githubUrlExpose"
-        type="checkbox"
-        displayName="github 주소 숨김"
-      />
       <FormInput id="enrollDate" type="date" displayName="생성 날짜" />
       <FormSelectMenu id="skill" name="Select Skill" key={randomKey()} />
       <button type="submit">Submit</button>

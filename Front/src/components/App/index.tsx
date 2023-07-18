@@ -16,7 +16,6 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-    // Provide the client to your App
     <QueryClientProvider client={queryClient}>
       <ReduxProvider>
         <RouterProvider router={router} />

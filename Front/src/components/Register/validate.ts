@@ -1,11 +1,12 @@
-import { RegisterValues } from "@/@types/custom";
+import { UserData } from "@/@types/custom";
 import { idRegex, passwordRegex } from "@/utils";
 import { z } from "zod";
 
-const id = z
-  .string()
-  .min(1, { message: "아이디를 입력해주세요." })
-  .regex(idRegex, "특수문자를 제외한 문자를 입력해주세요.");
+const notSpecialChar = (title: string) =>
+  z
+    .string()
+    .min(1, { message: `${title}를 입력해주세요.` })
+    .regex(idRegex, "특수문자를 제외한 문자를 입력해주세요.");
 
 const pw = z
   .string()
@@ -16,19 +17,19 @@ const strNullable = z.string().optional().nullable();
 
 export const pwSchema = z.object({
   userPwd: pw,
-  confirmPwd: pw,
+  confirmPwd: pw
 });
 
 export const otherSchema = z.object({
-  userId: id,
+  userId: notSpecialChar("아이디"),
+  nickName: notSpecialChar("닉네임"),
   confirmId: z.boolean(),
+  confirmNickName: z.boolean(),
   skill: z.string().array().optional().nullable(),
   profileImg: strNullable,
   userInfo: strNullable,
-  githubUrl: strNullable,
-  githubUrlExpose: z.boolean(),
   mento: z.boolean(),
-  enrollDate: z.coerce.date(),
+  enrollDate: z.coerce.date()
 });
 
 export const refinePWSchema = pwSchema.superRefine(async (data, ctx) => {
@@ -36,14 +37,11 @@ export const refinePWSchema = pwSchema.superRefine(async (data, ctx) => {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: "비밀번호가 일치하지 않습니다.",
-      path: ["confirmPwd"],
+      path: ["confirmPwd"]
     });
   }
 });
 
-export const schema = z.intersection(
-  otherSchema,
-  refinePWSchema
-) satisfies z.ZodType<RegisterValues>;
+export const schema = z.intersection(otherSchema, refinePWSchema) satisfies z.ZodType<UserData>;
 
 export type RegisterSchema = z.infer<typeof schema>;

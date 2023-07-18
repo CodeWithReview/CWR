@@ -8,13 +8,13 @@ type ValueWithLabel = {
 };
 
 type SelectMenuProps = {
-  defaultValue: ValueWithLabel;
+  defaultValue?: ValueWithLabel;
   id: string;
   value?: any;
   position: "right" | "center" | "left";
   options: any;
-  multi?: boolean;
-  clear?: boolean;
+  isMulti: boolean;
+  isClearable: boolean;
   inputRef?: RefCallBack;
   onChange?: (args: any) => void;
 };
@@ -25,8 +25,8 @@ const SelectMenu = ({
   value,
   position,
   options,
-  multi = false,
-  clear = true,
+  isMulti,
+  isClearable,
   inputRef,
   onChange,
   ...props
@@ -36,8 +36,8 @@ const SelectMenu = ({
       id={id}
       value={value}
       defaultValue={defaultValue}
-      isMulti={multi}
-      isClearable={clear}
+      isMulti={isMulti}
+      isClearable={isClearable}
       options={options}
       onChange={onChange}
       ref={inputRef}

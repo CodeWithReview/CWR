@@ -1,4 +1,4 @@
-import { UserData } from "@/@types/custom";
+import { RegisterData } from "@/@types/custom";
 import { idRegex, passwordRegex } from "@/utils";
 import { z } from "zod";
 
@@ -28,8 +28,7 @@ export const otherSchema = z.object({
   skill: z.string().array().optional().nullable(),
   profileImg: strNullable,
   userInfo: strNullable,
-  mento: z.boolean(),
-  enrollDate: z.coerce.date()
+  mento: z.boolean()
 });
 
 export const refinePWSchema = pwSchema.superRefine(async (data, ctx) => {
@@ -42,6 +41,8 @@ export const refinePWSchema = pwSchema.superRefine(async (data, ctx) => {
   }
 });
 
-export const schema = z.intersection(otherSchema, refinePWSchema) satisfies z.ZodType<UserData>;
+export const schema = z.intersection(otherSchema, refinePWSchema) satisfies z.ZodType<
+  Omit<RegisterData, "enrollDate">
+>;
 
 export type RegisterSchema = z.infer<typeof schema>;

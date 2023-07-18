@@ -5,7 +5,9 @@ import FormInput from "@/components/FormInput";
 import FormSelectMenu from "@/components/FormSelectMenu";
 import { useEffect } from "react";
 import { randomKey } from "@/utils";
-import { FieldErrors } from "react-hook-form";
+import { useAppDispatch } from "@/features/hooks";
+import { actions } from "@/features/users";
+import { addUser } from "@/database";
 
 const Register = () => {
   const form = useForm<RegisterSchema>({ schema });
@@ -14,25 +16,29 @@ const Register = () => {
   const password = form.watch("userPwd");
   const cpassword = form.watch("confirmPwd");
 
-  // 해당 의존성은 초기에 전송버튼을 누르지 않아도 validation이 작동하는데
-  // 필요한 것
+  const dispatch = useAppDispatch();
+
+  // 해당 의존성은 초기에 전송버튼을 누르기 전에 validation이 작동하는데 필요한 것
   useEffect(() => {
     form.trigger(["userId", "userPwd", "confirmPwd", "nickName"]);
   }, [password, id, nick, cpassword, form.trigger]);
 
-  const onSubmit = (data: RegisterSchema) => {};
-  const onInvalid = (errors: FieldErrors<RegisterSchema>) => {};
+  const onSubmit = async (data: RegisterSchema) => {
+    const user = { ...data, enrollDate: new Date() };
+    dispatch(actions.login({ ...user }));
+    await addUser({ ...user });
+  };
+
   return (
-    <Form form={form} onSubmit={onSubmit} onInvalid={onInvalid}>
-      <FormInput id="userId" type="text" displayName="ID" />
+    <Form form={form} onSubmit={onSubmit}>
+      <FormInput id="userId" type="text" displayName="ID" maxLength={10} />
       <FormInput id="confirmId" type="checkbox" displayName="중복확인" />
-      <FormInput id="nickName" type="text" displayName="닉네임" />
-      <FormInput id="nickNameConfirm" type="checkbox" displayName="중복확인" />
-      <FormInput id="userPwd" type="password" displayName="Password" />
-      <FormInput id="confirmPwd" type="password" displayName="Confirm Password" />
+      <FormInput id="nickName" type="text" displayName="닉네임" maxLength={15} />
+      <FormInput id="confirmNickName" type="checkbox" displayName="중복확인" />
+      <FormInput id="userPwd" type="password" displayName="Password" maxLength={15} />
+      <FormInput id="confirmPwd" type="password" displayName="Confirm Password" maxLength={15} />
       <FormInput id="mento" type="checkbox" displayName="멘토 여부" />
-      <FormInput id="enrollDate" type="date" displayName="생성 날짜" />
-      <FormSelectMenu id="skill" name="Select Skill" key={randomKey()} />
+      <FormSelectMenu id="skill" name="skill" key={randomKey()} />
       <button type="submit">Submit</button>
     </Form>
   );

@@ -13,19 +13,23 @@ const FormSelectMenu = ({ name, id }: FormSelectMenuProps) => {
     <Controller
       name={name}
       control={control}
-      render={({ field: { value, onChange, ref, ...restField } }) => (
-        <SelectMenu
-          id={id}
-          clear={true}
-          options={skill}
-          value={value ? skill.find((x) => x.value === value) : value}
-          onChange={(x: any) => onChange(x ? x.value : x)}
-          defaultValue={{ value: "Javascript", label: "Javascript" }}
-          position="center"
-          inputRef={ref}
-          {...restField}
-        />
-      )}
+      render={({ field: { value, onChange, ref, ...restField } }) => {
+        return (
+          <SelectMenu
+            id={id}
+            isMulti={true}
+            isClearable={true}
+            options={skill}
+            value={skill.find((c) => c.value === value)}
+            onChange={(e: any) =>
+              e.value ? onChange(e.value) : onChange(e.map((c: any) => c.value))
+            }
+            position="center"
+            inputRef={ref}
+            {...restField}
+          />
+        );
+      }}
     ></Controller>
   );
 };

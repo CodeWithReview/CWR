@@ -9,13 +9,12 @@ CREATE TABLE `member` (
 	`userNo`	int	NOT NULL	COMMENT '유저번호',
 	`userId`	varchar(10)	NOT NULL  unique	COMMENT '유저아이디',
 	`userPwd`	varchar(500)	NOT NULL	COMMENT '비밀번호',
+    `nickName` varchar(15) NOT NULL unique	COMMENT '닉네임',
 	`profileImg`	varchar(500)	NULL	COMMENT '프로필이미지',
 	`userInfo`	varchar(100)	NULL	COMMENT '자기소개',
 	`status`	varchar(10)	 NOT NULL	DEFAULT 'default'	COMMENT '계정상태(default / disabled / prevent)',
 	`mento`	char(1)	NOT NULL	DEFAULT 'N'	COMMENT '멘토여부(Y/N)',
 	`mentoDate`	datetime	NOT NULL	COMMENT '멘토여부수정날짜',
-	`githubUrl`	varchar(500)	NULL	COMMENT '깃허브주소',
-	`githubUrlExpose`	char(1)	NOT NULL	DEFAULT 'N'	COMMENT '깃허브주소노출여부(Y/N)',
 	`disabledDate`	datetime	NULL	COMMENT '탈퇴/차단일',
 	`enrollDate`	datetime	NOT NULL	COMMENT '가입일'
 );
@@ -27,7 +26,8 @@ CREATE TABLE `request` (
 	`status`	varchar(10)	NOT NULL	COMMENT '상태(waiting / progress / complete / cancle)',
 	`title`	varchar(50)	NOT NULL	COMMENT '제목',
 	`content`	varchar(500)	NOT NULL	COMMENT '내용',
-	`saveRoot`	varchar(100)	NULL	COMMENT '파일저장경로'
+	`saveRoot`	varchar(100)	NULL	COMMENT '파일저장경로',
+    `requestDate`	datetime	NOT NULL	COMMENT '의뢰일'
 );
 
 CREATE TABLE `review` (
@@ -36,7 +36,7 @@ CREATE TABLE `review` (
 	`topReviewNo`	int	NULL	COMMENT '상위리뷰번호',
 	`userNo`	int	NULL	COMMENT '작성자',
 	`content`	text(65535)	NOT NULL	COMMENT '내용',
-	`date`	datetime	NOT NULL	COMMENT '작성일'
+	`reviewDate`	datetime	NOT NULL	COMMENT '작성일'
 );
 
 CREATE TABLE `memberApi` (
@@ -68,7 +68,8 @@ ALTER TABLE `review` ADD CONSTRAINT `PK_REVIEW` PRIMARY KEY (
 );
 
 ALTER TABLE `memberApi` ADD CONSTRAINT `PK_MEMBERAPI` PRIMARY KEY (
-	`userNo`
+	`userNo`,
+    `apiType`
 );
 
 ALTER TABLE `developSkill` ADD CONSTRAINT `PK_DEVELOPSKILL` PRIMARY KEY (

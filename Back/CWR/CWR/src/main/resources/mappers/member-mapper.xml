@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="memberMapper">
+<!-- ==============================  select 구간 ================================ -->
+
+	<!-- ID/PWD 로 멤버 로그인 -->
+	<select id="loginByID">
+		SELECT    userNo ,
+				  userId ,
+				  userPwd ,
+				  nickName ,
+				  profileImg ,
+				  userInfo ,
+				  status ,
+				  mento ,
+				  mentoDate ,
+				  disabledDate ,
+				  enrollDate
+		FROM member
+		WHERE userId = #{userId} 
+	</select>
+
+
+	<!-- API로 멤버 로그인 -->
+	<select id="loginByApi" parameterType="map">
+		SELECT    userNo ,
+				  userId ,
+				  userPwd ,
+				  nickName ,
+				  profileImg ,
+				  userInfo ,
+				  status ,
+				  mento ,
+				  mentoDate ,
+				  disabledDate ,
+				  enrollDate
+		FROM member
+		left join memberapi using(userNo) 
+		WHERE apiType = #{ apiType } 
+			AND	apiKey = #{ apiKey }
+	</select>
+	
+	<!-- 멤버 정보 조회 -->
+	<select id="selectMember" parameterType="int">
+		SELECT    userNo ,
+				  userId ,
+				  userPwd ,
+				  nickName ,
+				  profileImg ,
+				  userInfo ,
+				  status ,
+				  mento ,
+				  mentoDate ,
+				  disabledDate ,
+				  enrollDate,
+				  skill
+		FROM member
+		left join memberDevelopSkill using(userNo) 
+		WHERE userNo = #{ userNo } 
+	</select>
+	
+	<!-- id/nickName 중복확인 -->
+	<select id="checkDuplicates" parameterType="map" resultType="int">
+		SELECT  count(*)
+		FROM member
+		<choose>
+			<when test='type.equals("id")'>
+				WHERE userId = #{ content } 
+			</when>
+			<when test='type.equals("nickName")'>
+				WHERE nickName = #{ content } 
+			</when>
+		</choose>
+	</select>
+	
+	<!-- id 중복확인 -->
+	<select id="idCheck" parameterType="string">
+		SELECT  count(*)
+		FROM member
+		WHERE nickName = #{ nickName } 
+	</select>
+
+
+
+<!-- =============================== insert 구간  =========================================== -->
+
+	<!-- 유저 생성 -->
+	<insert id="insertMember" useGeneratedKeys="true"  keyProperty="userNo" parameterType="member">
+		INSERT INTO member ( userId, userPwd, nickName, profileImg, userInfo, status, mento, mentoDate, enrollDate) 
+		VALUES (#{ userId }, 
+				#{ userPwd }, 
+				#{ nickName }, 
+				#{ profileImg }, 
+				#{ userInfo }, 
+				'default' , 
+				#{ mento }, 
+				now() , 
+				now() )
+	</insert>
+
+	<!-- 유저가 연동한 api 정보 등록 -->
+	<insert id="insertMemberApi" parameterType="memberApi">
+		INSERT INTO memberapi ( userNo, apiType, apiKey, apiId ) 
+		VALUES (#{ userNo }, 
+				#{ apiType }, 
+				#{ apiKey }, 
+				#{ apiId } )
+	</insert>
+	
+	<!-- 유저별 개발언어 등록 -->
+	<insert id="insertMemberSkill" parameterType="map">
+		INSERT INTO memberdevelopskill ( skill ) 
+		select skills.*
+		from (
+		<foreach collection="skillList" item="item" separator="UNION ALL">
+				SELECT
+					#{userNo} AS userNo ,
+					#{item} AS skill 
+				FROM DUAL
+		</foreach>
+		) skills
+	</insert>
+
+
+<!-- ============================== update 구간 ============================== -->
+
+
+	<!-- 유저 상태 변경 -->
+	<update id="updateMemberStatus" parameterType="map">
+		UPDATE member
+		SET   status = #{ status }
+		WHERE userNo = #{ userNo }
+	</update>
+	
+	
+	<update id="updateMember" parameterType="member">
+		UPDATE member
+		SET   userNo = #{  } ,
+			  userId = #{  } ,
+			  userPwd = #{  } ,
+			  nickName = #{  } ,
+			  profileImg = #{  } ,
+			  userInfo = #{  } ,
+			  status = #{  } ,
+			  mento = #{  } ,
+			  mentoDate = #{  } ,
+			  disabledDate = #{  } ,
+			  enrollDate = #{  }
+		WHERE FORM_NO  = #{formNo}
+	</update>
+
+
+
+
+<!-- ============================ delete 구간 ============================ -->
+
+	<!-- 유저 삭제 -->
+  	<delete id="deleteMember" parameterType="_int">
+  		DELETE FROM member
+		WHERE userNo = #{ userNo }
+  	</delete> 
+
+
+	<!-- 14일이 지난 탈퇴유저 삭제 -->
+  	<delete id="deleteDisabledMember">
+  		DELETE FROM member
+		WHERE status = 'disabled'
+			and now() > DATE_ADD( disabledDate , INTERVAL 14 day)
+  	</delete> 
+
+
+
+
+</mapper>

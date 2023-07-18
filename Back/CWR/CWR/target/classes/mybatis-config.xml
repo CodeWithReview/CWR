@@ -19,8 +19,10 @@
 	</settings>
 	
 	<typeAliases>
-		<!-- <typeAlias type="com.company.opeaceful.orgChart.model.vo.OrgChart" alias="orgChart"/> 예시 -->
-
+		<typeAlias type="com.team.cwr.member.model.vo.Member" alias="member"/>
+		<typeAlias type="com.team.cwr.member.model.vo.MemberApi" alias="memberApi"/>
+		<typeAlias type="com.team.cwr.request.model.vo.CodeRequest" alias="codeRequest"/>
+		<typeAlias type="com.team.cwr.request.model.vo.CodeReview" alias="codeReview"/>
 	</typeAliases>
 	
 	<!-- 
@@ -29,7 +31,7 @@
 		서버연결과 동시에 읽혀지는 root-context.xml에 기술하는것임)
 	 -->
 	<mappers>
-		<!-- <mapper resource="/mappers/orgChart-mapper.xml"/> 예시 -->
+		<mapper resource="/mappers/member-mapper.xml"/>
 	</mappers>
 
 

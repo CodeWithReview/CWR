@@ -15,7 +15,7 @@ const FormWithInput = () => {
 const meta = {
   title: "Input Component",
   component: FormWithInput,
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 } satisfies Meta<typeof FormWithInput>;
 
 export default meta;

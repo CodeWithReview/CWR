@@ -25,5 +25,6 @@
     "types": ["vite-plugin-svgr/client"]
   },
   "include": ["src", "./src/@types/*"],
+  "exclude": ["node_moduels", "yarn.lock"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

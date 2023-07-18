@@ -15,7 +15,7 @@ const StorySignUpPage = () => (
 const meta = {
   title: "SignUp Page with Header",
   component: StorySignUpPage,
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 } satisfies Meta<typeof StorySignUpPage>;
 
 export default meta;

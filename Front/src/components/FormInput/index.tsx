@@ -12,7 +12,7 @@ interface FormInputProps {
 const FormInput = ({ id, displayName, type }: FormInputProps) => {
   const {
     formState: { errors },
-    register,
+    register
   } = useFormContext();
   return (
     <div>

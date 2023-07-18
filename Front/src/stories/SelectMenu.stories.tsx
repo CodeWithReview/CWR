@@ -8,11 +8,11 @@ const meta = {
   argTypes: {
     position: {
       options: ["right", "center", "left"],
-      control: { type: "radio" },
-    },
+      control: { type: "radio" }
+    }
   },
 
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 } satisfies Meta<typeof SelectMenu>;
 
 export default meta;
@@ -24,6 +24,6 @@ export const Default: Story = {
     position: "center",
     defaultValue: { value: "Python", label: "Python" },
     id: "select-skill",
-    options: skill,
-  },
+    options: skill
+  }
 };

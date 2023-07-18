@@ -10,8 +10,8 @@ export default defineConfig({
     tsconfigPaths(),
     svgrPlugin({
       svgrOptions: {
-        icon: true,
-      },
-    }),
-  ],
+        icon: true
+      }
+    })
+  ]
 });

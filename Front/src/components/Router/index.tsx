@@ -1,7 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  Route,
+  Route
 } from "react-router-dom";
 import Templates from "@/components/Templates";
 import { lazy, Suspense } from "react";

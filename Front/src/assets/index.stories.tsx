@@ -14,7 +14,7 @@ const Logo = () => (
 const meta = {
   title: "Asset List",
   tags: ["autodocs"],
-  component: Logo,
+  component: Logo
 } satisfies Meta<typeof Logo>;
 
 export default meta;

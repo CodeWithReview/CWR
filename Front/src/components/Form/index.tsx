@@ -3,7 +3,7 @@ import {
   UseFormReturn,
   SubmitHandler,
   FieldValues,
-  SubmitErrorHandler,
+  SubmitErrorHandler
 } from "react-hook-form";
 import { ComponentProps } from "react";
 

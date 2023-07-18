@@ -4,7 +4,7 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2020: true,
+    es2020: true
   },
   extends: [
     "eslint:recommended",
@@ -12,22 +12,31 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:react-hooks/recommended",
     "plugin:storybook/recommended",
+    "airbnb-base"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
     // project: true,
-    tsconfigRootDir: __dirname,
+    tsconfigRootDir: __dirname
   },
-  plugins: ["react-refresh"],
+  plugins: ["react-refresh", "import", "@typescript-eslint", "prettier"],
   rules: {
     "react-refresh/only-export-components": [
       "warn",
       {
-        allowConstantExport: true,
-      },
+        allowConstantExport: true
+      }
     ],
-    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   },
+  settings: {
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  ignorePatterns: ["node_modules/", "tsconfig.json"]
 };

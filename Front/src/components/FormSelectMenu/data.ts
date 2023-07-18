@@ -7,5 +7,5 @@ export const skill = [
   { value: "Java", label: "Java" },
   { value: "Html", label: "Html" },
   { value: "CSS", label: "CSS" },
-  { value: "D", label: "D" },
+  { value: "D", label: "D" }
 ];

@@ -55,6 +55,9 @@ CREATE TABLE `memberDevelopSkill` (
 	`skill`	varchar(100)	NOT NULL	COMMENT '개발언어'
 );
 
+
+
+
 ALTER TABLE `member` ADD CONSTRAINT `PK_MEMBER` PRIMARY KEY (
 	`userNo`
 );
@@ -80,6 +83,10 @@ ALTER TABLE `memberDevelopSkill` ADD CONSTRAINT `PK_MEMBERDEVELOPSKILL` PRIMARY 
 	`userNo`,
 	`skill`
 );
+
+ALTER TABLE member MODIFY userNo INT NOT NULL AUTO_INCREMENT;
+ALTER TABLE review MODIFY reviewNo INT NOT NULL AUTO_INCREMENT;
+ALTER TABLE request MODIFY requestNo INT NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `request` ADD CONSTRAINT `FK_member_TO_request_1` FOREIGN KEY (
 	`menteeNo`
@@ -130,3 +137,48 @@ REFERENCES `developSkill` (
 	`skill`
 ) ON DELETE CASCADE;
 
+
+INSERT INTO developskill (skill) 
+VALUES ( 'Java' ),
+		( 'JavaScript' ),
+		( 'Python' ),
+		( 'C#' ),
+		( 'C++' ),
+		( 'TypeScript' ),
+		( 'PHP' ),
+		( 'Swift' ),
+		( 'Ruby' ),
+		( 'Go' ),
+		( 'Kotlin' ),
+		( 'Rust' ),
+		( 'Shell session-session' ),
+		( 'HTML' ),
+		( 'CSS' ),
+		( 'SQL' ),
+		( 'JSON' ),
+		( 'XML' ),
+		( 'YAML' ),
+		( 'Markdown' ),
+		( 'Bash' ),
+		( 'C' ),
+		( 'Objective-C' ),
+		( 'Scala' ),
+		( 'Perl' ),
+		( 'Groovy' ),
+		( 'Lua' ),
+		( 'R' ),
+		( 'Dart' ),
+		( 'Haskell' ),
+		( 'Spring' ),
+		( 'React.js' ),
+		( 'Angular' ),
+		( 'Django' ),
+		( 'ASP.NET' ),
+		( 'Ruby on Rails' ),
+		( 'Express.js' ),
+		( 'Flask' ),
+		( 'Laravel' ),
+		( 'Vue.js' ),
+		( 'ASP.NET Core' ),
+		( 'Node.js' ),
+		( 'Flask' );

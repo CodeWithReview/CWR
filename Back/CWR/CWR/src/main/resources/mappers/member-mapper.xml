@@ -2,10 +2,29 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="memberMapper">
+	<resultMap id="memberResultMap" type="member">
+	    <id property="userNo" column="userNo"/>
+	    <result property="userId" column="userId"/>
+	    <result property="userPwd" column="userPwd"/>
+	    <result property="nickName" column="nickName"/>
+	    <result property="profileImg" column="profileImg"/>
+	    <result property="userInfo" column="userInfo"/>
+	    <result property="status" column="status"/>
+	    <result property="mento" column="mento"/>
+	    <result property="mentoDate" column="mentoDate"/>
+	    <result property="disabledDate" column="disabledDate"/>
+	    <result property="enrollDate" column="enrollDate"/>
+	    <collection property="skill" ofType="java.lang.String">
+	        <id property="skill" column="skill"/>
+	    </collection>
+	</resultMap>
+
+
+
 <!-- ==============================  select 구간 ================================ -->
 
 	<!-- ID/PWD 로 멤버 로그인 -->
-	<select id="loginByID">
+	<select id="loginByID" parameterType="string" resultType="member">
 		SELECT    userNo ,
 				  userId ,
 				  userPwd ,
@@ -23,7 +42,7 @@
 
 
 	<!-- API로 멤버 로그인 -->
-	<select id="loginByApi" parameterType="map">
+	<select id="loginByApi" parameterType="map" resultType="member">
 		SELECT    userNo ,
 				  userId ,
 				  userPwd ,
@@ -42,7 +61,7 @@
 	</select>
 	
 	<!-- 멤버 정보 조회 -->
-	<select id="selectMember" parameterType="int">
+	<select id="selectMember" parameterType="int" resultMap="memberResultMap">
 		SELECT    userNo ,
 				  userId ,
 				  userPwd ,
@@ -75,7 +94,7 @@
 	</select>
 	
 	<!-- id 중복확인 -->
-	<select id="idCheck" parameterType="string">
+	<select id="idCheck" parameterType="string" resultType="int">
 		SELECT  count(*)
 		FROM member
 		WHERE nickName = #{ nickName } 
@@ -110,7 +129,7 @@
 	
 	<!-- 유저별 개발언어 등록 -->
 	<insert id="insertMemberSkill" parameterType="map">
-		INSERT INTO memberdevelopskill ( skill ) 
+		INSERT INTO memberdevelopskill ( userNo , skill ) 
 		select skills.*
 		from (
 		<foreach collection="skillList" item="item" separator="UNION ALL">
@@ -130,10 +149,18 @@
 	<update id="updateMemberStatus" parameterType="map">
 		UPDATE member
 		SET   status = #{ status }
+		<choose>
+			<when test='status.equals("default")'>
+				disabledDate = null
+			</when>
+			<otherwise>
+				disabledDate = now()
+			</otherwise>
+		</choose>
 		WHERE userNo = #{ userNo }
 	</update>
 	
-	
+<!-- 	
 	<update id="updateMember" parameterType="member">
 		UPDATE member
 		SET   userNo = #{  } ,
@@ -148,7 +175,7 @@
 			  disabledDate = #{  } ,
 			  enrollDate = #{  }
 		WHERE FORM_NO  = #{formNo}
-	</update>
+	</update> -->
 
 
 

@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS `review`;
 DROP TABLE IF EXISTS `request`;
-DROP TABLE IF EXISTS `memberDevelopSkill`;
-DROP TABLE IF EXISTS `developSkill`;
-DROP TABLE IF EXISTS `memberApi`;
+DROP TABLE IF EXISTS `memberdevelopskill`;
+DROP TABLE IF EXISTS `developskill`;
+DROP TABLE IF EXISTS `memberapi`;
 DROP TABLE IF EXISTS `member`;
 
 CREATE TABLE `member` (
@@ -39,18 +39,18 @@ CREATE TABLE `review` (
 	`reviewDate`	datetime	NOT NULL	COMMENT '작성일'
 );
 
-CREATE TABLE `memberApi` (
+CREATE TABLE `memberapi` (
 	`userNo`	int	NOT NULL	COMMENT '유저번호',
 	`apiType`	varchar(10)	NOT NULL	COMMENT 'api종류(google / github)',
 	`apiKey`	varchar(300)	NOT NULL	COMMENT 'api키값',
 	`apiId`	varchar(100)	NULL	COMMENT 'api 아이디값'
 );
 
-CREATE TABLE `developSkill` (
+CREATE TABLE `developskill` (
 	`skill`	varchar(100)	NOT NULL	COMMENT '개발언어'
 );
 
-CREATE TABLE `memberDevelopSkill` (
+CREATE TABLE `memberdevelopskill` (
 	`userNo`	int	NOT NULL	COMMENT '유저번호',
 	`skill`	varchar(100)	NOT NULL	COMMENT '개발언어'
 );
@@ -70,16 +70,16 @@ ALTER TABLE `review` ADD CONSTRAINT `PK_REVIEW` PRIMARY KEY (
 	`reviewNo`
 );
 
-ALTER TABLE `memberApi` ADD CONSTRAINT `PK_MEMBERAPI` PRIMARY KEY (
+ALTER TABLE `memberapi` ADD CONSTRAINT `PK_MEMBERAPI` PRIMARY KEY (
 	`userNo`,
     `apiType`
 );
 
-ALTER TABLE `developSkill` ADD CONSTRAINT `PK_DEVELOPSKILL` PRIMARY KEY (
+ALTER TABLE `developskill` ADD CONSTRAINT `PK_DEVELOPSKILL` PRIMARY KEY (
 	`skill`
 );
 
-ALTER TABLE `memberDevelopSkill` ADD CONSTRAINT `PK_MEMBERDEVELOPSKILL` PRIMARY KEY (
+ALTER TABLE `memberdevelopskill` ADD CONSTRAINT `PK_MEMBERDEVELOPSKILL` PRIMARY KEY (
 	`userNo`,
 	`skill`
 );
@@ -116,24 +116,24 @@ REFERENCES `member` (
 	`userNo`
 ) ON DELETE SET NULL;
 
-ALTER TABLE `memberApi` ADD CONSTRAINT `FK_member_TO_memberApi_1` FOREIGN KEY (
+ALTER TABLE `memberapi` ADD CONSTRAINT `FK_member_TO_memberApi_1` FOREIGN KEY (
 	`userNo`
 )
 REFERENCES `member` (
 	`userNo`
 ) ON DELETE CASCADE;
 
-ALTER TABLE `memberDevelopSkill` ADD CONSTRAINT `FK_member_TO_memberDevelopSkill_1` FOREIGN KEY (
+ALTER TABLE `memberdevelopskill` ADD CONSTRAINT `FK_member_TO_memberDevelopSkill_1` FOREIGN KEY (
 	`userNo`
 )
 REFERENCES `member` (
 	`userNo`
 ) ON DELETE CASCADE;
 
-ALTER TABLE `memberDevelopSkill` ADD CONSTRAINT `FK_developSkill_TO_memberDevelopSkill_1` FOREIGN KEY (
+ALTER TABLE `memberdevelopskill` ADD CONSTRAINT `FK_developSkill_TO_memberDevelopSkill_1` FOREIGN KEY (
 	`skill`
 )
-REFERENCES `developSkill` (
+REFERENCES `developskill` (
 	`skill`
 ) ON DELETE CASCADE;
 
@@ -176,7 +176,6 @@ VALUES ( 'Java' ),
 		( 'ASP.NET' ),
 		( 'Ruby on Rails' ),
 		( 'Express.js' ),
-		( 'Flask' ),
 		( 'Laravel' ),
 		( 'Vue.js' ),
 		( 'ASP.NET Core' ),

@@ -75,7 +75,7 @@
 				  enrollDate,
 				  skill
 		FROM member
-		left join memberDevelopSkill using(userNo) 
+		left join memberdevelopskill using(userNo) 
 		WHERE userNo = #{ userNo } 
 	</select>
 	

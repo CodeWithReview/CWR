@@ -41,8 +41,6 @@ export const refinePWSchema = pwSchema.superRefine(async (data, ctx) => {
   }
 });
 
-export const schema = z.intersection(otherSchema, refinePWSchema) satisfies z.ZodType<
-  Omit<RegisterData, "enrollDate">
->;
+export const schema = z.intersection(otherSchema, refinePWSchema) satisfies z.ZodType<RegisterData>;
 
 export type RegisterSchema = z.infer<typeof schema>;

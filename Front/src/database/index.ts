@@ -16,12 +16,10 @@ export const getDB = async (): Promise<IDBUserSchema> =>
     }
   });
 
-export const getUser = async () => {
+export const getUser = async (userId: string) => {
   const db = await getDB();
-  const tx = db.transaction("users", "readonly");
-  const user = tx.objectStore("users");
-  const req = await user.openCursor();
-  return req?.value;
+  const data = await db.get("users", userId);
+  return data;
 };
 
 export const getAllUser = async () => {

@@ -1,9 +1,12 @@
 import { IDBPDatabase, DBSchema } from "idb";
 export type UserStatus = "default" | "disabled" | "prevent";
 
-export type UserData = {
+export type UserDefault = {
   userId: string;
   userPwd: string;
+};
+
+export type UserData = UserDefault & {
   nickName: string;
   skill?: string[] | null;
   profileImg?: string | null;
@@ -12,10 +15,10 @@ export type UserData = {
   enrollDate: Date;
 };
 
-export type RegisterData = UserData & {
+export type RegisterData = {
   confirmId: boolean;
   confirmPwd: string;
-};
+} & Omit<UserData, "enrollDate" | "autoLogin">;
 
 export type GoogleAccount = {
   name: string;

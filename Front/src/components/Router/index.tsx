@@ -7,7 +7,8 @@ import Templates from "@/components/Templates";
 import { lazy, Suspense } from "react";
 
 const Home = lazy(() => import("@/pages/Home"));
-const Register = lazy(() => import("@/pages/SignUp"));
+const SignUp = lazy(() => import("@/pages/SignUp"));
+const SignIn = lazy(() => import("@/pages/SignIn"));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,7 +25,15 @@ export const router = createBrowserRouter(
         path="/signup"
         element={
           <Suspense>
-            <Register />
+            <SignUp />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/signin"
+        element={
+          <Suspense>
+            <SignIn />
           </Suspense>
         }
       />

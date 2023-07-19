@@ -25,7 +25,7 @@ const Register = () => {
 
   const onSubmit = async (data: RegisterSchema) => {
     const user = { ...data, enrollDate: new Date() };
-    dispatch(actions.login({ ...user }));
+    dispatch(actions.login({ ...user, autoLogin: true }));
     await addUser({ ...user });
   };
 
